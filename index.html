@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cifrado con AES y DES </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/tripledes.js"></script>            
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="accion.js" ></script>
+</head>
+<body style="font-family: Verdana; font-size: 100%; text-align: center; background-color: #CCE6F4;">
+    <div class="container">        
+        <div style="background-color: #033F63; border-radius: 15%;">        
+            <h1 style="color: white;">CIFRADO AES/DES</h1>       
+        </div>
+        <div>
+            <form>                    
+                <h3>Elige el archivo que quieres cifrar o descifrar</h3>
+                <input type="file" id="file-input" accept=".txt" style="background-color: cornflowerblue; font-size: 100%;" required/>                    
+                <span id="contenido-archivo" hidden></span>
+                <input id="archivoc" type="text" hidden>
+                <br>        
+                <h3>Ingrese la clave</h3>                
+                <input type="password" id="clave" name="clave" minlength="8" maxlength="32" required onkeyup="validarClave();" style="font-size: 100%;">                
+                <span id="valClave" style="font-size: 100%;"></span>
+                <label for="tcifrado"><h3>Elige el tipo de cifrado que quieres usar</h3></label>
+                <select id="tcifrado" style="font-size: 110%;">
+                    <option style="font-size: 110%;">AES</option>
+                    <option style="font-size: 110%;">DES</option>
+                </select>
+                <br><br>
+                <div>
+                    <div style="display: inline-block;">
+                        <input type="button" onclick="validarCamposC();" value="Cifrar" style="background-color: cornflowerblue; font-size: 115%;">                        
+                    </div>
+                    <div style="display: inline-block;">
+                        <input type="button" onclick="validarCamposD();" value="Descifrar" style="background-color: cornflowerblue; font-size: 115%;">
+                        <br>
+                    </div>                    
+                </div>
+                                
+                <br>           
+            </form>
+        </div>            
+        <div hidden>
+            <input id="ci" type="text" readonly>
+            <input id="des" type="text" readonly>
+            <textarea id="cci" readonly></textarea>    
+            <textarea id="cdes" readonly></textarea>                    
+        </div>
+        <div id="pshw"></div>
+        <br><br>
+    </div>
+
+    <script>
+        function leerArchivo(e) {
+        var archivo = e.target.files[0];
+        if (!archivo) {
+            return;
+        }
+        var lector = new FileReader();
+        lector.onload = function(e) {
+            var contenido = e.target.result;
+            mostrarContenido(contenido);
+        };
+        lector.readAsText(archivo);
+        }
+        function mostrarContenido(contenido) {
+        var elemento = document.getElementById('contenido-archivo');
+        elemento.innerHTML = contenido;  
+        document.getElementById('archivoc').value = contenido;
+        }
+        document.getElementById('file-input').addEventListener('change', leerArchivo, false);
+
+    </script>
+
+</body>
+</html>
